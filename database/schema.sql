@@ -1,6 +1,6 @@
-CREATE DATABASE IF NOT EXISTS fecBookingDatabase;
+CREATE DATABASE IF NOT EXISTS booking_db;
 
-USE fecBookingDatabase;
+USE booking_db;
 
 DROP TABLE IF EXISTS listings;
 
