@@ -2,8 +2,7 @@ import React from 'react';
 import { shallow, mount } from 'enzyme'; // may need shallow too
 import { spy } from 'sinon';
 import { expect } from 'chai';
-// eslint-disable-next-line import/extensions
-import App from '../components/App.jsx';
+import App from '../client/components/App.jsx';
 
 describe('<Booking />', () => {
   let wrapper;

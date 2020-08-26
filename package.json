@@ -39,7 +39,7 @@
     "enzyme-adapter-react-16": "^1.15.3",
     "enzyme-to-json": "^3.5.0",
     "eslint": "^7.2.0",
-    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-hackreactor": "https://github.com/reactorcore/eslint-config-hackreactor.git",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.20.5",
@@ -63,22 +63,26 @@
       "jsx"
     ],
     "moduleDirectories": [
-      "node_modules",
-      "client"
+      "<rootDir>/node_modules",
+      "<rootDir>/client"
     ],
+    "moduleNameMapper": {
+      "\\.(png|eot|ttf|woff|woff2)$": "<rootDir>/spec/__mocks__/fileMock.js",
+      "\\.(css|less)$": "<rootDir>/spec/__mocks__/fileMock.js"
+    },
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
     ],
     "collectCoverageFrom": [
       "<rootDir>/client/__tests__/*.js",
-      "!<rootDir>/client/index.jsx"
+      "<rootDir>/client"
     ],
     "coverageReporters": [
       "text"
     ],
     "testRegex": "((\\.|/*.)(spec))\\.js?$",
     "setupFilesAfterEnv": [
-      "<rootDir>/client/__tests__/jest.config.js"
+      "<rootDir>/spec/jest.config.js"
     ],
     "transform": {
       "^.+\\.jsx?$": "babel-jest"
