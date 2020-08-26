@@ -74,7 +74,7 @@
       "enzyme-to-json/serializer"
     ],
     "collectCoverageFrom": [
-      "<rootDir>/client/**/*.jsx"
+      "<rootDir>/server/*.js"
     ],
     "collectCoverage": true,
     "coverageReporters": [
