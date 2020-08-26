@@ -38,6 +38,30 @@ app.post('/api/booking/:id', (req, res) => {
   });
 });
 
+app.put('/api/booking/:id', (req, res) => {
+  const { id } = req.params;
+  const modifiedListing = req.body;
+  db.queryTableDataFromID(id, (error, results) => {
+    const listing = results[0];
+    if (!listing) {
+      res.status(404).end('Listing was not found.');
+    }
+    if (error) {
+      res.status(500).end('There was an error. Please try again later.');
+    } else {
+      delete modifiedListing.id;
+      Object.assign(listing, modifiedListing);
+      db.modifyListing(listing, (error, result) => {
+        if (error) {
+          res.status(500).end('There was an error. Please try again later.');
+        } else {
+          res.status(200).send({listing: [listing]}).end();
+        }
+      });
+    }
+  });
+});
+
 app.get('/assets/airbnb_rating_star.png', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/assets/airbnb_rating_star.png'));
 });

@@ -50,19 +50,31 @@ const insertListing = (listing, callback) => {
     });
 };
 
-const modifyListing = (id, listing, callback) => {
+const modifyListing = (listing, callback) => {
   let conn;
   mariadb.createConnection(dbConnectionOptions)
     .then((connection) => {
       conn = connection;
-      const queryString = 'UPDATE listings SET ? WHERE id = ?';
-      delete listing.id;
-      const queryArgs = [listing, id];
+      const queryString = 'UPDATE listings SET \
+          ownerName = ?, \
+          rating = ?, \
+          numRatings = ?, \
+          pricePerNight = ?, \
+          discountAmount = ? \
+          WHERE id = ?';
+      const queryArgs = [
+        listing.ownerName,
+        listing.rating,
+        listing.numRatings,
+        listing.pricePerNight,
+        listing.discountAmount,
+        listing.id
+      ];
       return conn.query(queryString, queryArgs);
     })
     .then((results) => {
       conn.close();
-      callback(null, results);
+      callback(null, [listing]);
     })
     .catch((err) => {
       conn.close();
