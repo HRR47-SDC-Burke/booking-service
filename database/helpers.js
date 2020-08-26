@@ -82,8 +82,28 @@ const modifyListing = (listing, callback) => {
     });
 };
 
+const deleteListing = (id, callback) => {
+  let conn;
+  mariadb.createConnection(dbConnectionOptions)
+    .then((connection) => {
+      conn = connection;
+      const queryString = 'DELETE FROM listings WHERE id = ?';
+      const queryArgs = [id];
+      return conn.query(queryString, queryArgs);
+    })
+    .then((results) => {
+      conn.close();
+      callback(null, results);
+    })
+    .catch((err) => {
+      conn.close();
+      callback(err, null);
+    });
+};
+
 module.exports = {
   queryTableDataFromID,
   insertListing,
   modifyListing,
+  deleteListing,
 };
