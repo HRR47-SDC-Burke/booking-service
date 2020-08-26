@@ -14,6 +14,7 @@ const queryTableDataFromID = (id, callback) => {
       callback(null, results);
     })
     .catch((err) => {
+      conn.close();
       callback(err, null);
     });
 };
