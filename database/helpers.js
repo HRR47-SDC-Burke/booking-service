@@ -50,7 +50,28 @@ const insertListing = (listing, callback) => {
     });
 };
 
+const modifyListing = (id, listing, callback) => {
+  let conn;
+  mariadb.createConnection(dbConnectionOptions)
+    .then((connection) => {
+      conn = connection;
+      const queryString = 'UPDATE listings SET ? WHERE id = ?';
+      delete listing.id;
+      const queryArgs = [listing, id];
+      return conn.query(queryString, queryArgs);
+    })
+    .then((results) => {
+      conn.close();
+      callback(null, results);
+    })
+    .catch((err) => {
+      conn.close();
+      callback(err, null);
+    });
+};
+
 module.exports = {
   queryTableDataFromID,
   insertListing,
+  modifyListing,
 };
