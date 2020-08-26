@@ -7,6 +7,7 @@ const app = express();
 const port = 3002;
 
 app.use(cors());
+app.use(express.json());
 app.use(express.static(path.join(__dirname, '../public')));
 app.use('/(:id)', express.static(path.join(__dirname, '../public')));
 
@@ -20,6 +21,19 @@ app.get('/api/booking/:id', (req, res) => {
       res.status(200).send({
         listing,
       });
+    }
+  });
+});
+
+app.post('/api/booking/:id', (req, res) => {
+  const { id } = req.params;
+  const listing = req.body;
+  db.insertListing(listing, (error, result) => {
+    if (error) {
+      res.status(500).end('There was an error. Please try again later.');
+    } else {
+      listing.id = result.insertId;
+      res.status(200).send({listing: [listing]}).end();
     }
   });
 });

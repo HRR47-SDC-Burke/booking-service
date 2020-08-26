@@ -25,12 +25,12 @@ const insertListing = (listing, callback) => {
     .then((connection) => {
       conn = connection;
       const queryString = 'INSERT INTO listings (\
-        ownerName, \
-        rating, \
-        numRatings, \
-        pricePerNight, \
-        discountAmount, \
-      )';
+          ownerName, \
+          rating, \
+          numRatings, \
+          pricePerNight, \
+          discountAmount \
+        ) values (?, ?, ?, ?, ?)';
       const queryArgs = [
         listing.ownerName,
         listing.rating,
