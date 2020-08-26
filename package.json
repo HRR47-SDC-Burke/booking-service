@@ -74,11 +74,11 @@
       "enzyme-to-json/serializer"
     ],
     "collectCoverageFrom": [
-      "<rootDir>/client/__tests__/*.js",
-      "<rootDir>/client"
+      "<rootDir>/client/**/*.jsx"
     ],
+    "collectCoverage": true,
     "coverageReporters": [
-      "text"
+      "lcov", "text"
     ],
     "testRegex": "((\\.|/*.)(spec))\\.js?$",
     "setupFilesAfterEnv": [
