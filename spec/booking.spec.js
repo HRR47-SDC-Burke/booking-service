@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme'; // may need shallow too
+import { shallow, mount } from 'enzyme';
 import { spy } from 'sinon';
 import { expect } from 'chai';
 import App from '../client/components/App.jsx';
@@ -18,7 +18,7 @@ describe('<Booking />', () => {
   });
 
   it('calls fetchListingInfo on mount', () => {
-    App.prototype.fetchListingInfo = jest.fn(); // creates mock function for API call
+    App.prototype.fetchListingInfo = jest.fn();
     spy(App.prototype, 'fetchListingInfo');
     wrapper = shallow(<App />);
     expect(App.prototype.fetchListingInfo).to.have.property('callCount', 1);
