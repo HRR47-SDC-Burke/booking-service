@@ -14,10 +14,96 @@ const queryTableDataFromID = (id, callback) => {
       callback(null, results);
     })
     .catch((err) => {
+      conn.close();
+      callback(err, null);
+    });
+};
+
+const insertListing = (listing, callback) => {
+  let conn;
+  mariadb.createConnection(dbConnectionOptions)
+    .then((connection) => {
+      conn = connection;
+      const queryString = 'INSERT INTO listings (\
+          ownerName, \
+          rating, \
+          numRatings, \
+          pricePerNight, \
+          discountAmount \
+        ) values (?, ?, ?, ?, ?)';
+      const queryArgs = [
+        listing.ownerName,
+        listing.rating,
+        listing.numRatings,
+        listing.pricePerNight,
+        listing.discountAmount
+      ];
+      return conn.query(queryString, queryArgs);
+    })
+    .then((results) => {
+      conn.close();
+      callback(null, results);
+    })
+    .catch((err) => {
+      conn.close();
+      callback(err, null);
+    });
+};
+
+const modifyListing = (listing, callback) => {
+  let conn;
+  mariadb.createConnection(dbConnectionOptions)
+    .then((connection) => {
+      conn = connection;
+      const queryString = 'UPDATE listings SET \
+          ownerName = ?, \
+          rating = ?, \
+          numRatings = ?, \
+          pricePerNight = ?, \
+          discountAmount = ? \
+          WHERE id = ?';
+      const queryArgs = [
+        listing.ownerName,
+        listing.rating,
+        listing.numRatings,
+        listing.pricePerNight,
+        listing.discountAmount,
+        listing.id
+      ];
+      return conn.query(queryString, queryArgs);
+    })
+    .then((results) => {
+      conn.close();
+      callback(null, [listing]);
+    })
+    .catch((err) => {
+      conn.close();
+      callback(err, null);
+    });
+};
+
+const deleteListing = (id, callback) => {
+  let conn;
+  mariadb.createConnection(dbConnectionOptions)
+    .then((connection) => {
+      conn = connection;
+      const queryString = 'DELETE FROM listings WHERE id = ?';
+      const queryArgs = [id];
+      return conn.query(queryString, queryArgs);
+    })
+    .then((results) => {
+      conn.close();
+      callback(null, results);
+    })
+    .catch((err) => {
+      conn.close();
       callback(err, null);
     });
 };
 
 module.exports = {
   queryTableDataFromID,
+  insertListing,
+  modifyListing,
+  deleteListing,
 };

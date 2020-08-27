@@ -11,12 +11,119 @@
 ## Table of Contents
 
 1. [Usage](#Usage)
-1. [Requirements](#requirements)
-1. [Development](#development)
+2. [Requirements](#requirements)
+3. [Development](#development)
 
 ## Usage
 
 > Using this booking module you can go do multiple id endpoints explained down below and see conditional rendered components as well as some react bootstrap modal user interaction.
+
+### API
+- Get full information of a listing
+  - Method & Path
+
+      `GET /api/booking/:id`
+
+  - Sample Response
+      ```sh
+      {
+        "listing": [
+          {
+            "id": 36,
+            "ownerName": "Marcellus1",
+            "rating": 4.42,
+            "numRatings": 31,
+            "pricePerNight": 159,
+            "discountAmount": 0
+          }
+        ]
+      }
+      ```
+
+- Add a new listing
+  - Method & Path
+
+      `POST /api/booking/:id`
+
+  - Request Body (All properties are **required**)
+    ```sh
+    {
+      "ownerName": <String>,
+      "rating": <Number>,
+      "numRatings": <Integer>,
+      "pricePerNight": <Integer>,
+      "discountAmount": <Integer>
+    }
+    ```
+
+  - Sample Response
+    ```sh
+    {
+      "listing": [
+        {
+          "id": 36,
+          "ownerName": "Marcellus2",
+          "rating": 4.44,
+          "numRatings": 32,
+          "pricePerNight": 159,
+          "discountAmount": 10
+        }
+      ]
+    }
+    ```
+
+- Modify an existing listing
+  - Method & Path
+
+      `PUT /api/booking/:id`
+
+  - Request Body (All properties are **optional**)
+    ```sh
+    {
+      "ownerName": <String>,
+      "rating": <Number>,
+      "numRatings": <Integer>,
+      "pricePerNight": <Integer>,
+      "discountAmount": <Integer>
+    }
+    ```
+
+  - Sample Response
+    ```sh
+    {
+      "listing": [
+        {
+          "id": 36,
+          "ownerName": "Marcellus2",
+          "rating": 4.44,
+          "numRatings": 32,
+          "pricePerNight": 159,
+          "discountAmount": 10
+        }
+      ]
+    }
+    ```
+
+- Delete an existing listing
+  - Method & Path
+
+      `DELETE /api/booking/:id`
+
+  - Sample Response
+      ```sh
+      {
+        "listing": [
+          {
+            "id": 36,
+            "ownerName": "Marcellus2",
+            "rating": 4.44,
+            "numRatings": 32,
+            "pricePerNight": 159,
+            "discountAmount": 10
+          }
+        ]
+      }
+      ```
 
 ## Requirements
 
@@ -86,7 +193,7 @@ Following that, you can open up a browser and go to http://localhost:3002/(:id) 
 
 ### Testing
 
-Finally, to test our program we can run the following tests after code changes.  
-```npm run test```  
+Finally, to test our program we can run the following tests after code changes.
+```npm run test```
 
 Note that the testing is very minimal at this point and is not extensive by any means.
