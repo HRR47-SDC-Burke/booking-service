@@ -24,7 +24,7 @@
 
       `GET /api/booking/:id`
 
-  - Example Response
+  - Sample Response
       ```sh
       {
         "listing": [
@@ -56,7 +56,7 @@
     }
     ```
 
-  - Example Response
+  - Sample Response
     ```sh
     {
       "listing": [
@@ -88,7 +88,7 @@
     }
     ```
 
-  - Example Response
+  - Sample Response
     ```sh
     {
       "listing": [
@@ -109,7 +109,7 @@
 
       `DELETE /api/booking/:id`
 
-  - Example Response
+  - Sample Response
       ```sh
       {
         "listing": [
