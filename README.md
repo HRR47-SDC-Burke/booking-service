@@ -197,3 +197,10 @@ Finally, to test our program we can run the following tests after code changes.
 ```npm run test```
 
 Note that the testing is very minimal at this point and is not extensive by any means.
+
+### Generating CSV Listing Data
+Run $ `npm run generate -- -n=<amount>`
+
+or $ `npm run generate -- -amount=<amount>`
+
+or $ `npm run generate` for default 10 million listings
