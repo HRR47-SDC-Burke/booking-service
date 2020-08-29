@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const db = require('../database/helpers');
+const db = require('./database');
 const cors = require('cors');
 
 const app = express();
@@ -13,11 +13,14 @@ app.use('/(:id)', express.static(path.join(__dirname, '../public')));
 
 app.get('/api/booking/:id', (req, res) => {
   const { id } = req.params;
-  db.queryTableDataFromID(id, (listingErr, listing) => {
-    if (listingErr) {
-      console.error(`Error querying listing in database: ${listingErr}`);
-      res.status(500).send(listingErr);
+  db.getListing(id, (error, listing) => {
+    if (error) {
+      res.status(500).end('There was an error. Please try again later.');
     } else {
+      if (!listing.length) {
+        res.status(404).end('Listing was not found.');
+        return;
+      }
       res.status(200).send({
         listing,
       });
@@ -25,15 +28,13 @@ app.get('/api/booking/:id', (req, res) => {
   });
 });
 
-app.post('/api/booking/:id', (req, res) => {
-  const { id } = req.params;
+app.post('/api/booking', (req, res) => {
   const listing = req.body;
   db.insertListing(listing, (error, result) => {
     if (error) {
-      res.status(500).end('There was an error. Please try again later.');
+      res.status(500).send(error);
     } else {
-      listing.id = result.insertId;
-      res.status(200).send({listing: [listing]}).end();
+      res.status(201).send({listing: [listing]}).end();
     }
   });
 });
@@ -41,13 +42,13 @@ app.post('/api/booking/:id', (req, res) => {
 app.put('/api/booking/:id', (req, res) => {
   const { id } = req.params;
   const modifiedListing = req.body;
-  db.queryTableDataFromID(id, (error, results) => {
+  db.getListing(id, (error, results) => {
     const listing = results[0];
-    if (!listing) {
-      res.status(404).end('Listing was not found.');
-    }
     if (error) {
       res.status(500).end('There was an error. Please try again later.');
+    }
+    if (!listing) {
+      res.status(404).end('Listing was not found.');
     } else {
       delete modifiedListing.id;
       Object.assign(listing, modifiedListing);
@@ -64,13 +65,13 @@ app.put('/api/booking/:id', (req, res) => {
 
 app.delete('/api/booking/:id', (req, res) => {
   const { id } = req.params;
-  db.queryTableDataFromID(id, (error, results) => {
+  db.getListing(id, (error, results) => {
     const listing = results[0];
-    if (!listing) {
-      res.status(404).end('Listing was not found.');
-    }
     if (error) {
       res.status(500).end('There was an error. Please try again later.');
+    }
+    if (!listing) {
+      res.status(404).end('Listing was not found.');
     } else {
       db.deleteListing(id, (error, result) => {
         if (error) {
