@@ -31,4 +31,4 @@ build/
 dist/
 
 # Locally generated data directory
-server/database/tmp
+database/tmp
