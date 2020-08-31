@@ -65,7 +65,6 @@ const modifyListing = (listing, callback) => {
   });
   const queryString = `UPDATE listings SET (id, ${columns.toString()}) `
   + `= ($1, ${params.toString()}) WHERE id = $1 RETURNING *`;
-  console.log(queryString, queryArgs);
   pool.connect()
     .then(client => {
       return client.query(queryString, queryArgs)
