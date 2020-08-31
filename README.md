@@ -43,7 +43,7 @@
 - Add a new listing
   - Method & Path
 
-      `POST /api/booking/:id`
+      `POST /api/booking`
 
   - Request Body (All properties are **required**)
     ```sh
