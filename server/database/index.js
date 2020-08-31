@@ -46,27 +46,26 @@ const insertListing = (
 };
 
 const modifyListing = (listing, callback) => {
-  const options = {
-    'ownerName': 1,
-    'rating': 1,
-    'numRatings': 1,
-    'pricePerNight': 1,
-    'discountAmount': 1
-  };
+  const options = [
+    'ownerName',
+    'rating',
+    'numRatings',
+    'pricePerNight',
+    'discountAmount',
+  ];
   const queryArgs = [Number(listing.id)];
   const columns = [];
   const params = [];
-  let idx = 2;
-  for (let key in listing) {
-    if (options[key]) {
-      columns.push(`"${key}"`);
-      params.push('$' + idx);
-      idx++;
-      queryArgs.push(listing[key]);
+  options.forEach(option => {
+    if (listing[option] !== undefined) {
+      columns.push(`"${option}"`);
+      params.push('$' + (params.length + 2));
+      queryArgs.push(listing[option]);
     }
-  }
+  });
   const queryString = `UPDATE listings SET (id, ${columns.toString()}) `
   + `= ($1, ${params.toString()}) WHERE id = $1 RETURNING *`;
+  console.log(queryString, queryArgs);
   pool.connect()
     .then(client => {
       return client.query(queryString, queryArgs)
