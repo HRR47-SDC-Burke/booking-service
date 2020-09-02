@@ -23,7 +23,9 @@
     "axios": "^0.19.2",
     "bootstrap": "^3.4.1",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "newrelic": "^6.13.0",
     "pg": "^8.3.3",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
@@ -50,6 +52,7 @@
     "nodemon": "^2.0.4",
     "sinon": "^9.0.3",
     "style-loader": "^1.2.1",
+    "supertest": "^4.0.2",
     "ttf-loader": "^1.0.2",
     "url-loader": "^4.1.0",
     "webpack": "^4.44.1",
@@ -69,11 +72,8 @@
       "\\.(png|eot|ttf|woff|woff2)$": "<rootDir>/spec/__mocks__/fileMock.js",
       "\\.(css|less)$": "<rootDir>/spec/__mocks__/fileMock.js"
     },
-    "snapshotSerializers": [
-      "enzyme-to-json/serializer"
-    ],
     "collectCoverageFrom": [
-      "<rootDir>/server/*.js"
+      "<rootDir>/server/app.js"
     ],
     "collectCoverage": true,
     "coverageReporters": [
