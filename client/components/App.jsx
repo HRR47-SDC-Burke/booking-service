@@ -1,9 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-// eslint-disable-next-line import/extensions
 import IntroPriceAndRating from './IntroPriceAndRating.jsx';
-// eslint-disable-next-line import/extensions
 import MainBookingAndPricing from './MainBookingAndPricing.jsx';
 import '../assets/bootstrap.css';
 
@@ -17,13 +15,12 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    // eslint-disable-next-line no-undef
-    const urlId = window.location.href.split('/')[3];
-    this.fetchListingInfo(urlId);
+    const path = window.location.pathname;
+    this.fetchListingInfo(path);
   }
 
-  fetchListingInfo(urlId) {
-    axios.get(`http://localhost:3002/api/booking/${urlId}`)
+  fetchListingInfo(path) {
+    axios.get(`/api/booking${path}`)
       .then(({ data }) => {
         this.setState({
           listing: data.listing[0],
