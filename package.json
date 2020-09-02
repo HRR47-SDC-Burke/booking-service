@@ -52,6 +52,7 @@
     "nodemon": "^2.0.4",
     "sinon": "^9.0.3",
     "style-loader": "^1.2.1",
+    "supertest": "^4.0.2",
     "ttf-loader": "^1.0.2",
     "url-loader": "^4.1.0",
     "webpack": "^4.44.1",
@@ -71,11 +72,8 @@
       "\\.(png|eot|ttf|woff|woff2)$": "<rootDir>/spec/__mocks__/fileMock.js",
       "\\.(css|less)$": "<rootDir>/spec/__mocks__/fileMock.js"
     },
-    "snapshotSerializers": [
-      "enzyme-to-json/serializer"
-    ],
     "collectCoverageFrom": [
-      "<rootDir>/server/*.js"
+      "<rootDir>/server/app.js"
     ],
     "collectCoverage": true,
     "coverageReporters": [
