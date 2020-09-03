@@ -16,7 +16,8 @@
     "db:setup": "node database/setup.js",
     "db:generate": "node database/generate.js",
     "start:dev": "nodemon server/index.js -w server -w database",
-    "build:dev": "webpack --mode production",
+    "build": "webpack -p",
+    "build:dev": "webpack --mode development --watch",
     "test": "jest"
   },
   "dependencies": {
@@ -47,6 +48,9 @@
     "eslint-config-hackreactor": "https://github.com/reactorcore/eslint-config-hackreactor.git",
     "faker": "^4.1.0",
     "file-loader": "^6.0.0",
+    "grunt": "^1.3.0",
+    "grunt-aws": "^0.7.1",
+    "grunt-webpack": "^4.0.2",
     "html-loader": "^1.2.1",
     "jest": "^26.3.0",
     "nodemon": "^2.0.4",
