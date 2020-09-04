@@ -8,11 +8,27 @@ const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 3002;
 
+/**
+ * Serve the bundled JS file from cloud
+ */
+const CLOUD_BUNDLE_URL = process.env.CLOUD_BUNDLE_URL;
+if (CLOUD_BUNDLE_URL) {
+  app.get('*/bundle.js', (req, res) => {
+    res.redirect(CLOUD_BUNDLE_URL);
+  });
+}
+
+/**
+ * Middleware and Static File Routing
+ */
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../public')));
 app.use('/(:id)', express.static(path.join(__dirname, '../public')));
 
+/**
+ * GET API
+ */
 app.get('/api/booking/:id', (req, res) => {
   const { id } = req.params;
   db.getListing(id, (error, listing) => {
@@ -28,6 +44,9 @@ app.get('/api/booking/:id', (req, res) => {
   });
 });
 
+/**
+ * POST API
+ */
 app.post('/api/booking', (req, res) => {
   const newListing = req.body;
   db.insertListing(newListing, (error, listing) => {
@@ -40,6 +59,9 @@ app.post('/api/booking', (req, res) => {
   });
 });
 
+/**
+ * PUT API
+ */
 app.put('/api/booking/:id', (req, res) => {
   const { id } = req.params;
   const modifiedListing = req.body;
@@ -57,6 +79,9 @@ app.put('/api/booking/:id', (req, res) => {
   });
 });
 
+/**
+ * DELETE API
+ */
 app.delete('/api/booking/:id', (req, res) => {
   const { id } = req.params;
   db.deleteListing(id, (error, listing) => {
@@ -70,10 +95,6 @@ app.delete('/api/booking/:id', (req, res) => {
     }
     res.status(200).send({ listing }).end();
   });
-});
-
-app.get('/assets/airbnb_rating_star.png', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/assets/airbnb_rating_star.png'));
 });
 
 module.exports = { app, port };

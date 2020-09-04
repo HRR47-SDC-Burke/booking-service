@@ -1,8 +1,10 @@
 const { Client } = require('pg');
 const client = new Client({
-  user: 'kizilsakal',
-  password: 'nopassword',
-  database: 'booking_db',
+  user: process.env.POSTGRES_USER || 'kizilsakal',
+  password: process.env.POSTGRES_PASSWORD || 'nopassword',
+  database: process.env.POSTGRES_DB || 'booking_db',
+  host: process.env.POSTGRES_URL || 'localhost',
+  port: process.env.POSTGRES_PORT || 5432,
   ssl: { rejectUnauthorized: false }
 });
 
