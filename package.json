@@ -1,6 +1,6 @@
 {
   "name": "booking-service",
-  "description": "> Project description",
+  "description": "A booking/calendar service for vacation rentals listing page",
   "author": "Jordan Pagni",
   "contributors": [
     {
@@ -15,6 +15,7 @@
   "scripts": {
     "db:setup": "node database/setup.js",
     "db:generate": "node database/generate.js",
+    "start": "node server/index.js",
     "start:dev": "nodemon server/index.js -w server -w database",
     "build": "webpack -p",
     "build:dev": "webpack --mode development --watch",
