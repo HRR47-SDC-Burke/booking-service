@@ -72,8 +72,4 @@ app.delete('/api/booking/:id', (req, res) => {
   });
 });
 
-app.get('/assets/airbnb_rating_star.png', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/assets/airbnb_rating_star.png'));
-});
-
 module.exports = { app, port };
