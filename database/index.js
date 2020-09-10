@@ -11,18 +11,20 @@ const pool = new Pool({
 const getListing = (id, callback) => {
   const queryString = 'SELECT * FROM listings WHERE id=$1';
   const queryArgs = [Number(id)];
-  pool.connect()
-    .then(client => {
-      return client.query(queryString, queryArgs)
-        .then(result => {
-          client.release();
-          callback(null, result.rows);
-        })
-        .catch(error => {
-          client.release();
-          callback(error, null);
-        });
+  pool.connect((err, client, release) => {
+    if (err) {
+      callback(err, null);
+      return;
+    }
+    client.query(queryString, queryArgs, (err, result) => {
+      release();
+      if (err) {
+        callback(err, null);
+        return;
+      }
+      callback(null, result.rows);
     });
+  });
 };
 
 const insertListing = (
