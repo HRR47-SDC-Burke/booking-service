@@ -11,18 +11,20 @@ const pool = new Pool({
 const getListing = (id, callback) => {
   const queryString = 'SELECT * FROM listings WHERE id=$1';
   const queryArgs = [Number(id)];
-  pool.connect()
-    .then(client => {
-      return client.query(queryString, queryArgs)
-        .then(result => {
-          client.release();
-          callback(null, result.rows);
-        })
-        .catch(error => {
-          client.release();
-          callback(error, null);
-        });
+  pool.connect((err, client, release) => {
+    if (err) {
+      callback(err, null);
+      return;
+    }
+    client.query(queryString, queryArgs, (err, result) => {
+      release();
+      if (err) {
+        callback(err, null);
+        return;
+      }
+      callback(null, result.rows);
     });
+  });
 };
 
 const insertListing = (
@@ -32,19 +34,20 @@ const insertListing = (
   + '"ownerName", "rating", "numRatings", "pricePerNight", "discountAmount")'
   + ' VALUES ($1, $2, $3, $4, $5) RETURNING *';
   const queryArgs = [ownerName, rating, numRatings, pricePerNight, discountAmount];
-  pool.connect()
-    .then (client => {
-      client.query(queryString, queryArgs)
-        .then(results => {
-          client.release();
-          callback(null, results.rows);
-        })
-        .catch(error => {
-          console.log(error);
-          client.release();
-          callback(error, null);
-        });
+  pool.connect((err, client, release) => {
+    if (err) {
+      callback(err, null);
+      return;
+    }
+    client.query(queryString, queryArgs, (err, result) => {
+      release();
+      if (err) {
+        callback(err, null);
+        return;
+      }
+      callback(null, result.rows);
     });
+  });
 };
 
 const modifyListing = (listing, callback) => {
@@ -67,36 +70,39 @@ const modifyListing = (listing, callback) => {
   });
   const queryString = `UPDATE listings SET (id, ${columns.toString()}) `
   + `= ($1, ${params.toString()}) WHERE id = $1 RETURNING *`;
-  pool.connect()
-    .then(client => {
-      return client.query(queryString, queryArgs)
-        .then(result => {
-          client.release();
-          callback(null, result.rows);
-        })
-        .catch(error => {
-          client.release();
-          callback(error, null);
-        });
+  pool.connect((err, client, release) => {
+    if (err) {
+      callback(err, null);
+      return;
+    }
+    client.query(queryString, queryArgs, (err, result) => {
+      release();
+      if (err) {
+        callback(err, null);
+        return;
+      }
+      callback(null, result.rows);
     });
+  });
 };
 
 const deleteListing = (id, callback) => {
   const queryString = 'DELETE FROM listings WHERE id=$1 RETURNING *';
   const queryArgs = [Number(id)];
-  pool.connect()
-    .then(client => {
-      return client.query(queryString, queryArgs)
-        .then(result => {
-          client.release();
-          callback(null, result.rows);
-        })
-        .catch(error => {
-          console.log(error);
-          client.release();
-          callback(error, null);
-        });
+  pool.connect((err, client, release) => {
+    if (err) {
+      callback(err, null);
+      return;
+    }
+    client.query(queryString, queryArgs, (err, result) => {
+      release();
+      if (err) {
+        callback(err, null);
+        return;
+      }
+      callback(null, result.rows);
     });
+  });
 };
 
 module.exports = {
