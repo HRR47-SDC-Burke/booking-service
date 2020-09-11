@@ -1,0 +1,25 @@
+version: 2.1
+jobs:
+    test_and_coverage:
+        docker:
+        - image: circleci/node:12.18.1
+          environment:
+            POSTGRES_USER: root
+            POSTGRES_DB: booking_db
+        - image: circleci/postgres:12.4
+          environment:
+            POSTGRES_USER: root
+            POSTGRES_DB: booking_db
+            POSTGRES_PASSWORD: nopassword
+        steps:
+            - checkout
+            - run: npm install
+            - run: npm run db:setup
+            - run: npm test
+            - store_artifacts:
+                path: coverage
+workflows:
+    version: 2
+    main:
+        jobs:
+            - test_and_coverage

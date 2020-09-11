@@ -73,7 +73,11 @@ const writeData = () => {
         }
         console.log(
           `Generated ${generationAmount.toLocaleString()} records in`
-          + ` ${(new Date() - startTime).toLocaleString()}ms`
+          + ` ${(new Date() - startTime).toLocaleString()}ms\n`
+          + 'Run the following command on psql to load data:\n'
+          + 'COPY listings(id,'
+          + '"ownerName","rating","numRatings","pricePerNight","discountAmount"'
+          + `) FROM '${__dirname + '/tmp/data.csv'}' DELIMITER ',' CSV HEADER;`
         );
       });
     } else {

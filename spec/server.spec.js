@@ -4,42 +4,6 @@ const request = require('supertest');
 const assert = require('assert');
 let testedListingId;
 
-describe('GET /api/booking/:id', function() {
-  it('Responds with JSON', function(done) {
-    request(app)
-      .get('/api/booking/5')
-      .expect('Content-Type', /json/)
-      .expect(200, done);
-  });
-
-  it('Returns a listing with ownerName property', function(done) {
-    request(app)
-      .get('/api/booking/10')
-      .expect(res => typeof res.body.listing[0].ownerName === 'string')
-      .expect(200, done);
-  });
-
-  it('Returns a listing with detail properties', function(done) {
-    request(app)
-      .get('/api/booking/10')
-      .expect(200)
-      .then(res => {
-        assert(res.body.listing[0].hasOwnProperty('id'), true);
-        assert(res.body.listing[0].hasOwnProperty('rating'), true);
-        assert(res.body.listing[0].hasOwnProperty('numRatings'), true);
-        assert(res.body.listing[0].hasOwnProperty('pricePerNight'), true);
-        assert(res.body.listing[0].hasOwnProperty('discountAmount'), true);
-      })
-      .then(done);
-  });
-
-  it('Returns 404 for a not found listing', function(done) {
-    request(app)
-      .get('/api/booking/-1')
-      .expect(404, done);
-  });
-});
-
 describe('POST /api/booking', function() {
   it('Returns the posted listing', function(done) {
     request(app)
@@ -62,6 +26,42 @@ describe('POST /api/booking', function() {
         assert(res.body.listing[0].hasOwnProperty('discountAmount'), true);
       })
       .then(done);
+  });
+});
+
+describe('GET /api/booking/:id', function() {
+  it('Responds with JSON', function(done) {
+    request(app)
+      .get('/api/booking/' + testedListingId)
+      .expect('Content-Type', /json/)
+      .expect(200, done);
+  });
+
+  it('Returns a listing with ownerName property', function(done) {
+    request(app)
+      .get('/api/booking/' + testedListingId)
+      .expect(res => typeof res.body.listing[0].ownerName === 'string')
+      .expect(200, done);
+  });
+
+  it('Returns a listing with detail properties', function(done) {
+    request(app)
+      .get('/api/booking/' + testedListingId)
+      .expect(200)
+      .then(res => {
+        assert(res.body.listing[0].hasOwnProperty('id'), true);
+        assert(res.body.listing[0].hasOwnProperty('rating'), true);
+        assert(res.body.listing[0].hasOwnProperty('numRatings'), true);
+        assert(res.body.listing[0].hasOwnProperty('pricePerNight'), true);
+        assert(res.body.listing[0].hasOwnProperty('discountAmount'), true);
+      })
+      .then(done);
+  });
+
+  it('Returns 404 for a not found listing', function(done) {
+    request(app)
+      .get('/api/booking/-1')
+      .expect(404, done);
   });
 });
 

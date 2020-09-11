@@ -29,12 +29,8 @@ client.connect()
       return;
     }
     console.log(
-      'Table "listings" OK. \n'
-      + 'Pkey sequence is not set. Please run this script again after loading data.\n'
-      + 'Run the following command on psql to load data:\n'
-      + 'COPY listings('
-      + 'id,"ownerName", "rating","numRatings","pricePerNight","discountAmount")'
-      + ` FROM '${__dirname + '/tmp/data.csv'}' DELIMITER ',' CSV HEADER;`
+      'Table "listings" OK. \nPkey sequence is not set.'
+      + ' Please run this script again after loading data.\n'
     );
   })
   .then(() => client.end())

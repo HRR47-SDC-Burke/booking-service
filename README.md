@@ -1,18 +1,19 @@
-# Airbnb Booking Module
+# Lairbnb / booking-service
 
-> This is a front end capstone project to build a clone of an Airbnb listing booking module.
+> Booking & Calendar Service for the listing page of a vacation rental website
 
 ## Related Projects
 
   - https://github.com/HRR47-SDC-Burke/carousel-service
   - https://github.com/HRR47-SDC-Burke/reviews-service
-  - https://github.com/HRR47-SDC-Burke/moreplacestostay-service
 
 ## Table of Contents
 
 1. [Usage](#Usage)
 2. [Requirements](#requirements)
 3. [Development](#development)
+4. [Production](#production)
+4. [Screenshot](#screenshot)
 
 ## Usage
 
@@ -145,6 +146,10 @@ npm install
 
 ### Setting up Database
 
+> Create a "booking_db" database via PSQL. Please see how to set up the
+> [environment variables](#environment-variables) if your PostgreSQL requires
+> authentication. Run the following command in terminal after the db is created.
+
 ```sh
 npm run db:setup
 ```
@@ -163,11 +168,11 @@ npm run db:setup
 On two separate terminal windows:
 
 ```sh
-npm run build:watch
+npm run build:dev
 ```
 
 ```sh
-npm run start:watch
+npm run start:dev
 ```
 
 ### Testing
@@ -175,3 +180,50 @@ npm run start:watch
 ```sh
 npm test
 ```
+
+## Production
+
+### Environment Variables
+- If you do not have the environment variables set up via shell, you can create
+ a `.env` file in the repository's root folder to load them. These are optional.
+
+ ```sh
+  POSTGRES_URL=<your-db-host>
+  POSTGRES_PORT=<your-db-port>
+  POSTGRES_DB=<your-database-name>
+  POSTGRES_USER=<your-db-username>
+  POSTGRES_PASSWORD=<your-db-password>
+  PORT=<your-server-port>
+  NEW_RELIC_LICENSE_KEY=<your-new-relic-license-key>
+  CLOUD_BUNDLE_URL=<your-cloud-hosted-bundle-url>
+ ```
+
+ ### Webpack Production Build
+
+```sh
+npm run build
+```
+
+### Node Express Server
+
+```sh
+npm start
+```
+
+### Hosting The Bundle on Cloud
+> Requires [Grunt](https://gruntjs.com/) and the dev dependencies to be installed
+
+- Create the grunt-aws.json file at $HOME/.aws directory
+  ```sh
+  {
+    "accessKeyId": "<your-access-keyId>",
+    "secretAccessKey": "<your-access-secret>",
+    "bucket": "<your-bucket-name>"
+  }
+  ```
+- Add `CLOUD_BUNDLE_URL=<your-bucket-url>` to the environment variables
+
+- Run $ `grunt` on the terminal
+
+## Screenshot
+![Screenshot](./docs/screenshot.png?raw=true "Screenshot")
