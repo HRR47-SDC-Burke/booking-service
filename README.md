@@ -1,5 +1,7 @@
 # Lairbnb / booking-service
 
+[![CI Status](https://circleci.com/gh/HRR47-SDC-Burke/booking-service.svg?style=shield)](https://circleci.com/gh/HRR47-SDC-Burke/booking-service)
+
 > Booking & Calendar Service for the listing page of a vacation rental website
 
 ## Related Projects

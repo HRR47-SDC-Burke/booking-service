@@ -6,7 +6,7 @@ jobs:
           environment:
             POSTGRES_USER: root
             POSTGRES_DB: booking_db
-        - image: circleci/postgres:12.4
+        - image: nimbustech/postgres-ssl:9.5
           environment:
             POSTGRES_USER: root
             POSTGRES_DB: booking_db
